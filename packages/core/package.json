@@ -1,0 +1,22 @@
+{
+  "name": "core",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Sebastiano Faiella <xeno097.cp@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "main.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nestjs/microservices": "^8.4.4"
+  }
+}
