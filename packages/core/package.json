@@ -17,6 +17,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@nestjs/config": "^2.0.0",
     "@nestjs/microservices": "^8.4.4"
   }
 }
