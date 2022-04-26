@@ -1,4 +1,11 @@
+import { randomUUID } from 'crypto';
+
 export abstract class BaseEvent {
-  abstract name: string;
-  abstract data: unknown;
+  readonly id: string;
+  abstract type: string;
+  abstract payload: unknown;
+
+  constructor() {
+    this.id = randomUUID();
+  }
 }
