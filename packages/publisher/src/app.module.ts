@@ -5,6 +5,7 @@ import { EVENT_CLIENT_INJECTION_TOKEN } from '../../core/lib';
 import { ConfigKeyEnum } from './config/config-key.enum';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GreetingModule } from './greeting/greeting.module';
+import { OutboxModule } from './outbox/outbox.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { GreetingModule } from './greeting/greeting.module';
         };
       },
     }),
+    OutboxModule,
     GreetingModule,
   ],
   controllers: [],
