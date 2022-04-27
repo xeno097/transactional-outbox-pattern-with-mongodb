@@ -1,5 +1,5 @@
 import { CustomTransportStrategy, Server } from '@nestjs/microservices';
-import { BaseEvent } from 'lib/events/base-event.abstract-class';
+import { BaseEvent } from '../../events/base-event.abstract-class';
 import { PubSubClient } from './pub-sub.client';
 
 export class GooglePubSubClientNestAdapter
