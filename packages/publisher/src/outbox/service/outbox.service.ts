@@ -7,15 +7,28 @@ import {
   IEventPublisher,
 } from '../../../../core/lib';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { ConfigService } from '@nestjs/config';
+import { ConfigKeyEnum } from 'src/config/config-key.enum';
 
 @Injectable()
 export class OutboxService {
+  private readonly _serviceId: string;
+
   constructor(
+    private readonly configService: ConfigService,
     @InjectConnection() private readonly connection: Connection,
     @InjectModel(Outbox.name) private readonly outBoxModel: Model<Outbox>,
     @Inject(EVENT_CLIENT_INJECTION_TOKEN)
     private readonly eventPublisher: IEventPublisher,
   ) {
+    const serviceId = this.configService.get(ConfigKeyEnum.SERVICE_ID);
+
+    if (!serviceId) {
+      throw new Error('Service ID is not set');
+    }
+
+    this._serviceId = serviceId;
+
     this._registerEventListener();
   }
 
@@ -25,6 +38,8 @@ export class OutboxService {
         {
           $match: {
             operationType: 'insert',
+            'fullDocument.metadata.handled': false,
+            'fullDocument.metadata.createdBy': this._serviceId,
           },
         },
       ])
@@ -60,6 +75,16 @@ export class OutboxService {
       throw error;
     } finally {
       await session.endSession();
+    }
+  }
+
+  public async sendOutStandingEvents() {
+    const events = await this.outBoxModel.find({
+      'metadata.handled': false,
+    });
+
+    for (const event of events) {
+      await this._handleEvent(event);
     }
   }
 }
