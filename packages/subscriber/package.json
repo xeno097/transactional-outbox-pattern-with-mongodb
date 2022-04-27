@@ -28,10 +28,12 @@
     "@nestjs/microservices": "^8.4.4",
     "@nestjs/mongoose": "^9.0.3",
     "@nestjs/platform-express": "^8.0.0",
+    "core": "^0.0.0",
     "mongoose": "^6.3.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
