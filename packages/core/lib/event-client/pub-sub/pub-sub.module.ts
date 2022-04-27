@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CoreConfigKeyEnum } from 'lib/config/core-env-key.enum';
+import { CoreConfigKeyEnum } from '../../config/core-env-key.enum';
 import { PubSubClient } from '.';
 import { EVENT_CLIENT_INJECTION_TOKEN } from '..';
 
