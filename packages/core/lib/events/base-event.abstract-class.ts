@@ -27,6 +27,4 @@ export abstract class BaseEvent {
     this.createdAt = new Date().toISOString();
     this.metadata = new EventMetadata(metadata.createdBy, metadata.handled);
   }
-
-  abstract toJSON(): unknown;
 }

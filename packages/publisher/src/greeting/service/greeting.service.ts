@@ -15,7 +15,6 @@ export class GreetingService {
   constructor(
     private readonly configService: ConfigService,
     @InjectConnection() private readonly connection: Connection,
-
     @InjectModel(Greeting.name) private readonly greetModel: Model<Greeting>,
     @InjectModel(Outbox.name) private readonly outBoxModel: Model<Outbox>,
   ) {

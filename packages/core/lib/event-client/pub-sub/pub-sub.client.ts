@@ -19,7 +19,7 @@ export class PubSubClient implements IEventClient {
     const topic = await this._getTopic(event);
 
     await topic.publishMessage({
-      json: data.toJSON(),
+      json: data,
     });
   }
 
