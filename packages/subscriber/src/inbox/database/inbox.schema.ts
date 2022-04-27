@@ -5,6 +5,7 @@ import { BaseEvent, EventMetadata } from '../../../../core/lib';
 @Schema()
 export class Inbox extends Document implements BaseEvent {
   @Prop({
+    unique: true,
     required: true,
   })
   id: string;

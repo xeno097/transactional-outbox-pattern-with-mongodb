@@ -23,6 +23,7 @@ import { InboxModule } from './inbox/inbox.module';
     }),
     GooglePubSubModule,
     InboxModule,
+    GreetingModule,
   ],
   controllers: [],
 })
