@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PubSubClient } from '../../core/lib/event-client/pub-sub/pub-sub.client';
 import { EVENT_CLIENT_INJECTION_TOKEN } from '../../core/lib';
 import { ConfigKeyEnum } from './config/config-key.enum';
+import { MongooseModule } from '@nestjs/mongoose';
+import { GreetingModule } from './greeting/greeting.module';
 
 @Module({
   imports: [
@@ -10,6 +12,15 @@ import { ConfigKeyEnum } from './config/config-key.enum';
       isGlobal: true,
       envFilePath: `${process.cwd()}/env/.env`,
     }),
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          uri: configService.get(ConfigKeyEnum.MONGO_URI),
+        };
+      },
+    }),
+    GreetingModule,
   ],
   controllers: [],
   providers: [
