@@ -17,7 +17,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@google-cloud/pubsub": "git+https://github.com/googleapis/nodejs-pubsub.git",
     "@nestjs/config": "^2.0.0",
-    "@nestjs/microservices": "^8.4.4"
+    "@nestjs/microservices": "^8.4.4",
+    "uuid": "^8.3.2"
   }
 }
