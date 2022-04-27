@@ -6,8 +6,10 @@ type GreetingPayload = {
   createdAt: string;
 };
 
+export const CREATED_GREETING_EVENT = 'created.greeting';
+
 export class CreatedGreetingEvent extends BaseEvent {
-  readonly type: string = 'created.greeting';
+  readonly type: string = CREATED_GREETING_EVENT;
   readonly payload: GreetingPayload;
 
   constructor(greeting: GreetingPayload, metadata: IEventMetadata) {
