@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactional-outbox-mongodb-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactional-outbox-mongodb
+  template:
+    metadata:
+      labels:
+        app: transactional-outbox-mongodb
+    spec:
+      containers:
+        - name: transactional-outbox-mongodb
+          image: transactional-outbox/mongodb
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactional-outbox-mongodb-srv
+spec:
+  selector:
+    app: transactional-outbox-mongodb
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

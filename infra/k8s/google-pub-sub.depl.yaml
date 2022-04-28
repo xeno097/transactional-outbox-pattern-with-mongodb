@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactional-outbox-pub-sub-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactional-outbox-pub-sub
+  template:
+    metadata:
+      labels:
+        app: transactional-outbox-pub-sub
+    spec:
+      containers:
+        - name: transactional-outbox-pub-sub
+          image: knarz/pubsub-emulator
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactional-outbox-pub-sub-srv
+spec:
+  selector:
+    app: transactional-outbox-pub-sub
+  ports:
+    - name: db
+      protocol: TCP
+      port: 8085
+      targetPort: 8085

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactional-outbox-publisher-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactional-outbox-publisher
+  template:
+    metadata:
+      labels:
+        app: transactional-outbox-publisher
+    spec:
+      containers:
+        - name: transactional-outbox-publisher
+          image: transactional-outbox/publisher  
+          env:
+            - name: PORT
+              value: '3000'
+            - name: MONGO_URI
+              value: 'mongodb://transactional-outbox-mongodb-srv:27017/publisher?readPreference=primary&directConnection=true&ssl=false'
+            - name: GOOGLE_PUBSUB_PROJECT_ID
+              value: 'transactional-outbox-with-mongodb'
+            - name: GOOGLE_PUB_SUB_API_ENDPOINT
+              value: http://transactional-outbox-pub-sub-srv:8085
+            - name: SERVICE_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactional-outbox-publisher-srv
+spec:
+  selector:
+    app: transactional-outbox-publisher
+  ports:
+    - name: transactional-outbox-publisher
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
