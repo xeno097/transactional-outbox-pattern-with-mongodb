@@ -22,7 +22,7 @@ export class GreetingService {
     session.startTransaction();
 
     try {
-      this.logger.log('Received event: ' + JSON.stringify(event));
+      this.logger.log('Received event: ' + JSON.stringify(event, null, 2));
 
       // Verify if the incoming event is already in the inbox
       const checkInbox = await this.inboxModel.findOne({ id: event.id }, null, {

@@ -59,7 +59,7 @@ export class OutboxService {
     session.startTransaction();
     try {
       await this.eventPublisher.publish(event.type, event);
-      this.logger.log(`Event ${JSON.stringify(event)} published`);
+      this.logger.log(`Published event ${JSON.stringify(event, null, 2)}`);
 
       await this.outBoxModel.updateOne(
         {
