@@ -5,6 +5,8 @@ import {
   BaseEvent,
   EVENT_CLIENT_INJECTION_TOKEN,
   IEventPublisher,
+  ILogger,
+  LOGGER_INJECTION_TOKEN,
 } from '../../../../core/lib';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
@@ -20,6 +22,7 @@ export class OutboxService {
     @InjectModel(Outbox.name) private readonly outBoxModel: Model<Outbox>,
     @Inject(EVENT_CLIENT_INJECTION_TOKEN)
     private readonly eventPublisher: IEventPublisher,
+    @Inject(LOGGER_INJECTION_TOKEN) private readonly logger: ILogger,
   ) {
     const serviceId = this.configService.get(ConfigKeyEnum.SERVICE_ID);
 
@@ -56,6 +59,7 @@ export class OutboxService {
     session.startTransaction();
     try {
       await this.eventPublisher.publish(event.type, event);
+      this.logger.log(`Published event ${JSON.stringify(event, null, 2)}`);
 
       await this.outBoxModel.updateOne(
         {
