@@ -1,0 +1,7 @@
+**/dist
+**/node_modules
+.git
+.eslintrc.js
+.prettierrc.js
+.gitignore
+infra/k8s
