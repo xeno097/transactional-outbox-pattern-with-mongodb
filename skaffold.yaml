@@ -1,0 +1,37 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: transactional-outbox-pattern-with-mongodb
+build:
+  local:
+    push: false
+  artifacts:
+  - image: transactional-outbox/subscriber
+    sync:
+      manual:
+        - dest: .
+          src: ./packages/subscriber/**/*.ts
+    docker:
+      target: SUBSCRIBER
+      dockerfile: ./packages/subscriber/Dockerfile
+  - image: transactional-outbox/publisher
+    sync:
+      manual:
+        - dest: .
+          src: ./packages/publisher/**/*.ts
+    docker:
+      target: PUBLISHER
+      dockerfile: ./packages/publisher/Dockerfile
+  - image: transactional-outbox/mongodb
+    docker:
+      target: curbo-dev-db-mongo
+      dockerfile: ./infra/db/Dockerfile
+    sync:
+      manual:
+        - dest: .
+          src: ./infra/db/*
+
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
